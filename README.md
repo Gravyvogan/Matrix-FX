@@ -1,69 +1,45 @@
 # Matrix Fx - AI-Powered Forex Trading App
 
-A cross-platform mobile application combining real-time forex market data, WebSocket communication, and AI-driven trading signals.
+A full-stack mobile trading application with real-time market data, AI-powered trading signals, and comprehensive portfolio management.
 
-## 🚀 Features
+## 🎯 Features
 
-- **Real-time Market Data**: Live forex prices via WebSocket
-- **Trading AI Engine**: Intelligent trading signals based on technical analysis
-- **User Authentication**: Secure JWT-based login system
-- **Live Charts**: Real-time price visualization
-- **Trading Dashboard**: Monitor positions and signals
-- **Cross-Platform**: iOS and Android support via React Native
+- **AI Trading Signals**: Intelligent buy/sell signals using RSI, MACD, and Bollinger Bands
+- **Real-time Market Data**: Live price updates via WebSocket
+- **Portfolio Management**: Track trades, profits, and performance metrics
+- **Risk Management**: Configurable leverage, stop-loss, and take-profit
+- **User Authentication**: Secure JWT-based authentication
+- **Mobile-First**: React Native with Expo for iOS and Android
 
-## 📁 Project Structure
-
-```
-Matrix-Fx/
-├── backend/              # Node.js/Express backend
-│   ├── src/
-│   │   ├── models/       # Database models
-│   │   ├── routes/       # API endpoints
-│   │   ├── controllers/  # Business logic
-│   │   ├── middleware/   # Auth, validation
-│   │   ├── services/     # AI, market data, trading
-│   │   ├── websocket/    # WebSocket handlers
-│   │   └── app.js        # Express app
-│   ├── .env.example      # Environment variables template
-│   ├── package.json      # Dependencies
-│   └── server.js         # Server entry point
-│
-└── frontend/             # React Native app
-    ├── src/
-    │   ├── screens/      # Screen components
-    │   ├── components/   # Reusable components
-    │   ├── services/     # API & WebSocket client
-    │   ├── redux/        # State management
-    │   ├── utils/        # Helper functions
-    │   └── App.js        # Main app component
-    ├── app.json          # Expo/RN config
-    └── package.json      # Dependencies
-```
-
-## 🛠️ Tech Stack
-
-### Backend
-- **Node.js** & **Express** - Server framework
-- **MongoDB** - Database
-- **Socket.io** - Real-time WebSocket communication
-- **JWT** - Authentication
-- **Axios** - HTTP client for market data APIs
+## 📱 Tech Stack
 
 ### Frontend
-- **React Native** - Cross-platform mobile
-- **Expo** - Development environment
-- **Redux** - State management
-- **Socket.io-client** - WebSocket client
-- **React Navigation** - Navigation
+- **React Native** with Expo
+- **Redux Toolkit** for state management
+- **Socket.io** for real-time communication
+- **React Navigation** for routing
+- **Axios** for HTTP requests
 
-## 🔧 Setup Instructions
+### Backend
+- **Node.js** with Express
+- **MongoDB** for data persistence
+- **Socket.io** for WebSocket support
+- **JWT** for authentication
+- **Bcrypt** for password hashing
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v14+)
+- MongoDB
+- Expo CLI (`npm install -g expo-cli`)
 
 ### Backend Setup
 ```bash
 cd backend
 npm install
 cp .env.example .env
-# Configure your .env file with API keys and database
+# Configure your .env file with API keys and database URL
 npm run dev
 ```
 
@@ -74,30 +50,132 @@ npm install
 npm start
 ```
 
-## 🤖 AI Trading Engine
+## 📋 API Endpoints
 
-The AI uses technical analysis indicators:
-- Moving Averages (MA)
-- Relative Strength Index (RSI)
-- MACD
-- Bollinger Bands
-- Support/Resistance levels
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+
+### Trading
+- `GET /api/trades` - Get user trades
+- `POST /api/trades` - Create new trade
+- `PUT /api/trades/:id` - Update trade
+- `DELETE /api/trades/:id` - Close trade
+
+### Market Data
+- `GET /api/market/price/:pair` - Get current price
+- `GET /api/market/historical/:pair` - Get historical data
+- `POST /api/market/signal` - Get AI trading signal
+
+### User
+- `GET /api/user/profile` - Get user profile
+- `PUT /api/user/profile` - Update profile
+- `GET /api/user/portfolio` - Get portfolio metrics
+
+## 🔗 WebSocket Events
+
+### Client to Server
+- `subscribe_prices` - Subscribe to price updates
+- `request_signal` - Request AI trading signal
+- `request_portfolio_analysis` - Request portfolio analysis
+- `execute_trade` - Execute a trade
+
+### Server to Client
+- `price_update` - Real-time price update
+- `signal_generated` - New AI signal generated
+- `trade_executed` - Trade execution confirmation
+- `error` - Error notification
+
+## 🏗️ Project Structure
+
+```
+Matrix-Fx/
+├── backend/
+│   ├── src/
+│   │   ├── models/          # MongoDB schemas
+│   │   ├── routes/          # API routes
+│   │   ├── controllers/      # Route controllers
+│   │   ├── services/         # Business logic
+│   │   ├── middleware/       # Auth & validation
+│   │   ├── utils/            # Utilities
+│   │   ├── websocket/        # WebSocket handlers
+│   │   ├── config/           # Configuration
+│   │   └── app.js            # Express setup
+│   ├── server.js             # Server entry point
+│   ├── package.json
+│   └── .env.example
+├── frontend/
+│   ├── src/
+│   │   ├── screens/          # Screen components
+│   │   ├── components/       # Reusable components
+│   │   ├── services/         # API & WebSocket
+│   │   ├── redux/            # State management
+│   │   └── utils/            # Helpers
+│   ├── App.js                # Root component
+│   ├── app.json              # Expo config
+│   ├── package.json
+│   └── .env
+```
 
 ## 🔐 Security
 
-- JWT token-based authentication
-- Password hashing with bcrypt
+- Passwords hashed with bcrypt
+- JWT tokens for authentication
+- CORS enabled for specified origins
+- Input validation on all endpoints
 - Environment variables for sensitive data
-- HTTPS ready
 
-## 📝 License
+## 📊 Database Schema
 
-MIT
+### User Model
+- username, email, password
+- accountBalance, leverage, riskPercentage
+- preferredPairs, tradingHistory
 
-## 👤 Author
+### Trade Model
+- userId, pair, type (BUY/SELL)
+- entryPrice, exitPrice, quantity
+- stopLoss, takeProfit, status
+- profit, profitPercentage
+- AI signal strength and indicators
+
+## 🧪 Testing
+
+```bash
+# Backend tests
+cd backend
+npm test
+
+# Frontend tests
+cd frontend
+npm test
+```
+
+## 📝 Environment Variables
+
+See `.env.example` files in both backend and frontend directories.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+## 👨‍💻 Author
 
 Gravyvogan
 
+## 🙌 Support
+
+For issues and questions, please create a GitHub issue.
+
 ---
 
-**Status**: 🚧 In Development
+**Matrix Fx** - Empowering Traders with AI 🤖📈
